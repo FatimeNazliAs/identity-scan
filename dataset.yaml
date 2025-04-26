@@ -1,0 +1,10 @@
+path: yolov8_id_data  # Folder that contains images and labels
+
+train: images/train
+val: images/val
+
+names:
+  0: id_number
+  1: surname
+  2: name
+  3: birth_date
