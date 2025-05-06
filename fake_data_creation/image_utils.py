@@ -21,6 +21,12 @@ def write_text_to_draw(draw, top_left_coordinates, info, fill, font, align):
     return draw
 
 
+def initialize_template():
+    fill, font, align = load_text_info()
+    template_image, draw = load_img()
+    return template_image, draw, fill, font, align
+
+
 def save_template_image(template_image, img_file_path):
     template_image.save(img_file_path)
 
@@ -37,10 +43,7 @@ def add_label_to_bbox(bbox_coordinate, label):
 
 
 def generate_labeled_yolo_bbox(
-    draw,
-    top_left_coordinates,
-    text,
-    bbox_label,
+    draw, top_left_coordinates, text, bbox_label, template_image, fill, font, align
 ):
     text_on_draw = write_text_to_draw(
         draw, top_left_coordinates, text, fill, font, align
@@ -60,7 +63,7 @@ def generate_labeled_yolo_bbox(
     return labeled_yolo_bbox_coordinate
 
 
-def process_draw():
+def process_draw(draw, template_image, fill, font, align):
     fake_info_dict = create_fake_info()
 
     id_number_top_left, surname_top_left, name_top_left, birth_date_top_left = (
@@ -75,19 +78,30 @@ def process_draw():
     ]
 
     yolo_coordinates = [
-        generate_labeled_yolo_bbox(draw=draw, top_left_coordinates=coords, text=fake_info_dict[field], bbox_label=label)
+        generate_labeled_yolo_bbox(
+            draw,
+            coords,
+            fake_info_dict[field],
+            label,
+            template_image,
+            fill,
+            font,
+            align,
+        )
         for field, coords, label in text_fields
     ]
     return yolo_coordinates
 
 
-def save(txt_file_path, img_file_path):
-    yolo_coordinates = process_draw()
+def save(txt_file_path, img_file_path, template_image, draw, fill, font, align):
+    yolo_coordinates = process_draw(draw, template_image, fill, font, align)
     save_yolo_labels_to_txt(yolo_coordinates, txt_file_path)
     save_template_image(template_image, img_file_path)
 
 
 if __name__ == "__main__":
-    fill, font, align = load_text_info()
-    template_image, draw = load_img()
 
+    # fill, font, align = load_text_info()
+    # template_image, draw = load_img()
+    # save(txt_file_path, img_file_path,template_image, draw, fill, font, align)
+    pass
