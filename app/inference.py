@@ -13,7 +13,7 @@ def train_model():
         A YOLO model ready for training.
     """
     model = YOLO("yolo11n.yaml").load("yolo11n.pt")
-    model.train(data="dataset.yaml", epochs=200, device="cuda",augment=True)
+    model.train(data="dataset.yaml", epochs=200, device="cuda", augment=True)
     return model
 
 
@@ -77,22 +77,30 @@ def save_crops(results, output_dir):
     results[0].save_crop(output_dir)
 
 
-
-
-def apply_ocr(crop_dir):
+def apply_ocr(crop_dir, delete_after=True):
     """
-    Apply EasyOCR to the cropped images and extract text.
+    Apply EasyOCR to cropped images and extract text from identity fields.
 
     Parameters
     ----------
     crop_dir : str
-        Directory containing cropped images.
+        Path to the directory containing cropped image folders (e.g., 'name/im.jpg').
+    delete_after : bool, optional
+        Whether to delete the cropped image after extracting text. Default is True.
 
     Returns
     -------
     dict
-        Dictionary mapping field labels to recognized text.
+        A dictionary where keys are field labels (e.g., 'name', 'birth_date') and values are extracted text strings.
+
+    Notes
+    -----
+    - Uses EasyOCR with Turkish and English language support.
+    - Expects each cropped field to be located at `crop_dir/field_label/im.jpg`.
+    - If a label image does not exist or OCR fails, assigns an empty string.
+    - Optionally deletes the cropped images after OCR to reduce disk usage or protect sensitive data.
     """
+
     reader = easyocr.Reader(["tr", "en"])
     text_labels = ["birth_date", "id_number", "name", "surname"]
     extracted_texts = {}
@@ -102,6 +110,8 @@ def apply_ocr(crop_dir):
         if os.path.exists(label_path):
             result = reader.readtext(label_path)
             extracted_texts[label] = result[0][1] if result else ""
+            if delete_after:
+                os.remove(label_path)
         else:
             extracted_texts[label] = ""
 
@@ -133,4 +143,5 @@ def workflow(image_path, crop_output_dir):
     return extracted_texts
 
 
-# workflow("sample.png", "crops")
+text_labels = ["birth_date", "id_number", "name", "surname"]
+workflow("sample.png", "crops")
