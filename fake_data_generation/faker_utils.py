@@ -31,6 +31,6 @@ def create_fake_info():
         "birth_date": str(fake.date_of_birth()).replace("-", "."),
     }
 
-    for key, val in fake_info_dict.items():
-        print(key, val)
+    # for key, val in fake_info_dict.items():
+    #     print(key, val)
     return fake_info_dict
