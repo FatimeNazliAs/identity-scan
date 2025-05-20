@@ -118,8 +118,7 @@ def apply_ocr(crop_dir, delete_after=True):
     return extracted_texts
 
 
-
-def workflow(image_path, crop_output_dir):
+def extract_inference(image_path, crop_output_dir):
     """
     Full pipeline: load model, detect fields, crop, apply OCR, and print results.
 
@@ -144,4 +143,4 @@ def workflow(image_path, crop_output_dir):
 
 
 text_labels = ["birth_date", "id_number", "name", "surname"]
-workflow("sample.png", "crops")
+# extract_inference("sample.png", "crops")
