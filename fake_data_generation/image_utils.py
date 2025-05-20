@@ -150,7 +150,7 @@ def generate_labeled_yolo_bbox(
         draw, top_left_coordinates, text, fill, font, align
     )
     bbox = draw_bbox(
-        text_on_draw, top_left_coordinates=top_left_coordinates, info=text, font=font
+        text_on_draw, top_left_coordinates=top_left_coordinates, text=text, font=font
     )
     yolo_bbox_coordinate = xyxy2xywh(np.array(bbox))
     norm_yolo_bbox_coordinate = normalize_yolo_bbox_coordinates(
