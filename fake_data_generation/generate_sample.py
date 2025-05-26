@@ -25,7 +25,7 @@ import os
 if __name__ == "__main__":
     base_path = "fake_data_generation"
     # I first opened those img_folder and txt_folder and after that 
-    # I copied them into app/fake_generated_data folder, divided them into train and val sets.
+    # I copied them into fake_generated_data folder, divided them into train and val sets based on Yolo dataset.yaml format.
     img_folder = os.path.join(base_path, "synthetic_data", "images")
     txt_folder = os.path.join(base_path, "synthetic_data", "labels")
 
