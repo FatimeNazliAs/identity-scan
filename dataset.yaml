@@ -1,4 +1,4 @@
-path: yolov8_id_data  # Folder that contains images and labels
+path: fake_generated_data  # Folder that contains images and labels
 
 train: images/train
 val: images/val

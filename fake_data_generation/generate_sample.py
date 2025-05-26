@@ -24,13 +24,17 @@ import os
 
 if __name__ == "__main__":
     base_path = "fake_data_generation"
+    # I first opened those img_folder and txt_folder and after that 
+    # I copied them into app/fake_generated_data folder, divided them into train and val sets.
     img_folder = os.path.join(base_path, "synthetic_data", "images")
     txt_folder = os.path.join(base_path, "synthetic_data", "labels")
 
     os.makedirs(img_folder, exist_ok=True)
     os.makedirs(txt_folder, exist_ok=True)
 
-    for index in range(101, 102):
+    # As I created first 10 images and labels myself, I continued with 11-102 to create rest 90 images.
+    # You can change range between how many images and labels you want.
+    for index in range(11, 101):
         template_image, draw, fill, font, align = initialize_template()
         txt_file_path = os.path.join(txt_folder, f"{index}.txt").replace("\\", "/")
         img_file_path = os.path.join(img_folder, f"{index}.png").replace("\\", "/")
