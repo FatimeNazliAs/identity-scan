@@ -4,7 +4,7 @@
  
 ## Demo Video
 
-[![Custom Video Thumbnail](videos-images/cover_photo.png)](https://youtu.be/3zZTFchu9Ic)
+[![Custom Video Thumbnail](videos-images/cover_photo.png)](https://www.youtube.com/watch?v=DpsFDZcUw4s)
 
 ## What This App Does
 
