@@ -1,6 +1,11 @@
 # identity-scan
  OCR Turkish Identity Card Scanner using FastAPI and Gradio
 
+ 
+## Demo Video
+
+[![Custom Video Thumbnail](videos-images/cover_photo.png)](https://youtu.be/3zZTFchu9Ic)
+
 ## What This App Does
 
 This app is designed to provide an end-to-end pipeline for extracting identity information from uploaded identity card images. It offers a user-friendly interface through Gradio, allowing you to:
