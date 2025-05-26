@@ -1,3 +1,4 @@
+import gradio as gr
 from fastapi import FastAPI, UploadFile, Depends
 from .database import engine, get_db
 from sqlalchemy.orm import Session
@@ -16,6 +17,7 @@ from .crud import (
 )
 from typing import Annotated, List
 from .schemas import IdentityCardRequest, IdentityCardResponse
+from .gradio_ui import create_gradio_ui
 
 app = FastAPI()
 
@@ -64,3 +66,11 @@ async def save_inference_results(db: db_dependency):
 async def get_inference_results(db: db_dependency):
     results = db.query(IdentityCard).all()
     return results
+
+
+# 1. Call the function from gradio_ui.py to get the Gradio Blocks object
+gradio_app_instance = create_gradio_ui()
+
+# 2. Mount the Gradio app to your FastAPI app at the /gradio path
+#    Now, when you go to http://127.0.0.1:8000/gradio, you'll see the Gradio UI.
+app = gr.mount_gradio_app(app, gradio_app_instance, path="/gradio")
