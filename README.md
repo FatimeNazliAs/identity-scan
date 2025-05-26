@@ -1,5 +1,25 @@
-# identity scan
- OCR Identity Card Scanner with FastAPI and Gradio
+# identity-scan
+ OCR Turkish Identity Card Scanner using FastAPI and Gradio
+
+## What This App Does
+
+This app is designed to provide an end-to-end pipeline for extracting identity information from uploaded identity card images. It offers a user-friendly interface through Gradio, allowing you to:
+
+- 📤 Upload an identity card image
+- 🧠 Use a YOLO model to detect key fields (e.g., ID number, name, surname, birth date)
+- 🔍 Use EasyOCR to extract text from those detected fields
+- 💾 Save the extracted information into an SQLite database for future use
+
+### Purpose
+
+The main goal of this project is to streamline the process of identity data extraction by combining:
+
+- **YOLO** for object detection to locate fields on the card
+- **EasyOCR** for accurate text extraction
+- **Gradio** for an interactive and accessible user interface
+- **SQLite** for lightweight, local data storage
+
+This setup enables fast and efficient data extraction and management without relying on external APIs or manual input.
 
 
 ## Project Structure
@@ -58,7 +78,6 @@ Initially, synthetic identity card images and labels were created manually using
 
 To automate this process, scripts have been developed and are located in the `fake_data_generation/` folder.
 
----
 
 ### How to Generate Synthetic Data
 
@@ -72,16 +91,54 @@ To automate this process, scripts have been developed and are located in the `fa
     * `images/`: synthetic identity card images
     * `labels/`: YOLO-format label text files
     
-**Note:** You can modify the number of generated samples by adjusting the `range` parameters within the script.
+    **Note:** You can modify the number of generated samples by adjusting the `range` parameters within the script.
 
----
 
-### After Data Generation
+### Organizing Generated Data
 
 1.  Open `fake_generated_data/` folder in the project root. Inside, open the `images/` and `labels/` folders. Both of these should contain `train/` and `val/` subfolders.
 2.   Manually cut and paste the generated images and label files from `fake_data_generation/synthetic_data/` into the appropriate `train/` and `val/` folders under `fake_generated_data/`.
 3. This dataset structure is now ready for training your YOLO model.
 
+
+    **Note:**  If you prefer not to run the generation script yourself, a sample dataset is already available in the `fake_generated_data/` folder of this repository. You can use it directly for training or  testing.
+
 ---
 
-**Note:** If you prefer not to run the generation script yourself, a sample dataset is already available in the `fake_generated_data/` folder of this repository. You can use it directly for training or testing.
+## 🚀 How It Works
+
+Follow the steps below to set up and run the application:
+
+1. **Create a virtual environment**  
+
+   Create and activate a virtual environment (optional but recommended):
+
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows use: venv\Scripts\activate
+
+2. **Install dependencies**
+
+   Install required packages from requirements.txt:
+   
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. **Generate and Organize Data (if not using provided dataset)**
+
+   If you are not using the pre-provided dataset in fake_generated_data/, follow the instructions in the "Synthetic Data Generation Process" section above to generate and organize your own data.
+
+4. **Start the application**
+
+   Run the app using Uvicorn:
+    
+    ```bash
+    uvicorn main:app --reload
+    ```
+5. **Open the Gradio UI**
+
+   Navigate to the following URL in your browser:
+
+    ```bash
+    http://127.0.0.1:8000/gradio/
+    ```
